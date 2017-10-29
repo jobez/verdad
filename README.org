@@ -1,0 +1,3 @@
+* verdad
+
+Exploration of integrating [[https://github.com/libigl/libigl][libigl]] with [[https://gitlab.com/embeddable-common-lisp/ecl/][embeddable common lisp]]

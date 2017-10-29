@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.1)
-project(example)
+project(verdad)
+include(FindECL.cmake)
+
+set(CMAKE_CXX_STANDARD 14)
+# set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -24,8 +29,10 @@ option(LIBIGL_WITH_VIEWER           "Use OpenGL viewer"  ON)
 option(LIBIGL_WITH_XML              "Use XML"            OFF)
 
 find_package(LIBIGL REQUIRED QUIET)
-
+find_library(ECL REQUIRED QUIET)
 # Add your project files
-file(GLOB SRCFILES *.cpp)
-add_executable(${PROJECT_NAME}_bin ${SRCFILES})
-target_link_libraries(${PROJECT_NAME}_bin igl::core igl::viewer)
+file(GLOB SRCFILES *.cpp *.hpp *.cc *.h)
+add_executable(${PROJECT_NAME} ${SRCFILES})
+target_link_libraries(${PROJECT_NAME} igl::core ecl igl::viewer)
+install(TARGETS ${PROJECT_NAME}
+  DESTINATION bin)
