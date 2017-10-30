@@ -28,7 +28,6 @@
    ;;     (return str)))
 
 
-
    (function call-lisp ((const #:std:string &call))
        ->
        void

@@ -1,3 +1,15 @@
+(ql:quickload :cffi)
+
+(cffi:defcallback on-keydown
+    :bool
+    ((viewer :pointer)
+     (key :char)
+     (modifier :int))
+  (princ key))
+
+(ecl-set-keydown-cb (cffi:callback on-keydown))
+
+
 (ecl-to-matrixXd 8 3 #(0.0 0.0 0.0
                        0.0 0.0 1.0
                        0.0 1.0 0.0
@@ -20,4 +32,5 @@
                         2 6 8
                         2 8 4))
 
-;; (ecl-start-igl-viewer)
+(ecl-set-mesh)
+(ecl-start-igl-viewer)

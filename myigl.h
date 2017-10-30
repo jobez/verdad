@@ -3,6 +3,7 @@
 //INTERFACE GENERATED WITH CM-IFS
 #include <igl/viewer/Viewer.h>
 #include "cl_bridge_utils.hpp"
+typedef bool (*keydown_cb)(igl::viewer::Viewer& viewer, unsigned char key, int modifier);
 namespace myigl
 {
 

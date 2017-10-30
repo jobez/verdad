@@ -94,11 +94,21 @@ namespace myigl
 		return ecl_make_integer(0);
 	}
 
+	void set_keydown_cb(cl_object on_keydown_cb)
+	{
+		viewer.callback_key_down = ((keydown_cb)ecl_foreign_data_pointer_safe(on_keydown_cb));
+	}
+
+	cl_object ECL_SET_KEYDOWN_CB(cl_object on_keydown_cb)
+	{
+		set_keydown_cb(on_keydown_cb);
+		return ecl_make_integer(0);
+	}
+
 	int start_igl_viewer()
 	{
 		std::cout << V << std::endl;
 		std::cout << F << std::endl;
-		viewer.callback_key_down = &key_down;
 		viewer.launch();
 	}
 
@@ -111,6 +121,7 @@ namespace myigl
 	void load_ecl_bindings()
 	{
 		cl_def_c_function(c_string_to_object("ecl-start-igl-viewer"), ((cl_objectfn_fixed)ECL_START_IGL_VIEWER), 0);
+		cl_def_c_function(c_string_to_object("ecl-set-keydown-cb"), ((cl_objectfn_fixed)ECL_SET_KEYDOWN_CB), 1);
 		cl_def_c_function(c_string_to_object("ecl-set-mesh"), ((cl_objectfn_fixed)ECL_SET_MESH), 0);
 		cl_def_c_function(c_string_to_object("ecl-to-matrixXi"), ((cl_objectfn_fixed)ecl_to_matrixXi), 3);
 		cl_def_c_function(c_string_to_object("ecl-to-matrixXd"), ((cl_objectfn_fixed)ecl_to_matrixXd), 3);

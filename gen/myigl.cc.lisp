@@ -5,12 +5,19 @@
 (with-interface (myigl)
   (include <igl/viewer/Viewer.h>)
   (include "cl_bridge_utils.hpp")
+
+  (typedef bool (fpointer keydown-cb
+                            ((#:igl::viewer::Viewer& viewer)
+                               (unsigned char key)
+                               (int modifier))))
   (namespace
    'myigl
    (implementation-only
+
     (decl ((#:igl::viewer::Viewer viewer)
            (#:Eigen::MatrixXd V)
            (#:Eigen::MatrixXi F))
+
       (gen-ecl-wrapper
        (function to-matrixXd
            ((cl_obj rows)
@@ -103,16 +110,16 @@
        (viewer.data.set_face_based true)))
 
     (gen-ecl-wrapper
+     (function set-keydown-cb ((cl-object on-keydown-cb)) -> void
+       (set viewer.callback_key_down
+            (cast keydown-cb
+                  (ecl-foreign-data-pointer-safe on-keydown-cb)))))
+
+    (gen-ecl-wrapper
      (function start-igl-viewer ()
          -> int
-
        (cprint V)
-
        (cprint F)
-
-
-       (set viewer.callback_key_down &key_down)
        (viewer.launch))))
 
-   (make-ecl-loader)
-   ))
+   (make-ecl-loader)))
